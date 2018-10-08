@@ -12,19 +12,19 @@ const audio = document.createElement('audio');
 class Main extends React.Component{
     constructor(props){
         super(props);
-
         this.state = {
             albums: [],
             selectedAlbum: {},
+            currentSong: {},
         };
         this.start = this.start.bind(this);
         this.handlerClick = this.handlerClick.bind(this);
         this.resetAlbum = this.resetAlbum.bind(this);
-        this.start = this.start.bind(this.selectedAlbum);
+        this.start = this.start.bind(this);
     }
-    start (val) {
-        //console.log(this.selectedAlbum);
-        audio.src = val;
+    start (song) {
+        this.setState({currentSong: song})
+        audio.src = song.audioUrl;
         audio.load();
         audio.play();
     }
@@ -50,10 +50,9 @@ class Main extends React.Component{
         .catch();
     }
     render(){
-        //console.log(this.state.selectedAlbum);
         return <div>
                 <Sidebar resetAlbum={this.resetAlbum}/>
-                {(Object.keys(this.state.selectedAlbum) == '' ) ? ( <Esqueleto albums={this.state.albums} handlerClick={this.handlerClick}/>): <SingleAlbum selectedAlbum={this.state.selectedAlbum} start={this.start}/>}
+                {(Object.keys(this.state.selectedAlbum) == '' ) ? ( <Esqueleto albums={this.state.albums} handlerClick={this.handlerClick}/>): <SingleAlbum selectedAlbum={this.state.selectedAlbum} start={this.start} currentSong={this.state.currentSong}/>}
                 <Footer/>
             </div>
     }

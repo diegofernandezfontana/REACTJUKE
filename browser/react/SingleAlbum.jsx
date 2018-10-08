@@ -7,16 +7,12 @@ class SingleAlbum extends React.Component{
         this.state = {};
     }
     render(){
-        console.log(this.props);
-        //console.log(this.props.selectedAlbum.songs);
         return(
     <div className="album col-xs-10">
         <div>
             <h3>{this.props.selectedAlbum.name}</h3>
             <img src={this.props.selectedAlbum.imageUrl} className="img-thumbnail" />
         </div>
-
-
         <table className='table'>
             <thead>
                 <tr>
@@ -28,10 +24,13 @@ class SingleAlbum extends React.Component{
             </thead>
             <tbody>
             { this.props.selectedAlbum.songs.map((song)=>{
-                console.log(song);
-                return <tr key={song.name}>
+                return <tr key={song.name} className={ song.id == this.props.currentSong.id ? 'active' : '' } >
                  <td>
-                     <button className="btn btn-default btn-xs"  onClick={() =>  this.props.start(song.audioUrl)}>
+                    <button className={ song.id == this.props.currentSong.id ? 'visibility: hidden' : "btn btn-default btn-xs " } onClick={() =>
+                        {
+                            this.props.start(song)
+                        }
+                    }>
                      <span className="glyphicon glyphicon-play"></span>
                      </button>
                  </td>
